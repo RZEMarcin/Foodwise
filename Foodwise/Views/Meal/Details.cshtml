@@ -1,0 +1,30 @@
+﻿@model Meal
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="text-primary">Product Details</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <dl class="row">
+            <dt class="col-sm-4">Id:</dt>
+            <dd class="col-sm-8">@Model.Id</dd>
+
+            
+            
+            <dt class="col-sm-4">Products:</dt>
+            <dd class="col-sm-8">
+                <ul>
+                    @foreach (var mealProduct in Model.MealProducts)
+                    {
+                        <li>@mealProduct.Product.Name</li>
+                    }
+                </ul>
+            </dd>
+        </dl>
+        
+        <a asp-controller="Meal" asp-action="Index" class="btn btn-dark">Back to List</a>
+    </div>
+</div>

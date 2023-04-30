@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Meal> 
+ 
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+        <h2 class="text-primary">Meals</h2>
+        </div>
+         <div class="col-6 text-end">
+              <a asp-controller="Meal" asp-action="Create" class="btn btn-primary">
+                  <i class="bi bi-plus-circle"> </i> &nbsp; Add a New Meal
+              </a> 
+              <br><br/>
+            <br><br/>
+         </div>
+    </div>
+
+    
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var meal in Model)
+        {
+            <tr>
+                <td>@meal.Name</td>
+               
+          
+
+                <td>
+
+                        <div class="w-75 btn-group" role="group">
+                                <a asp-controller="Meal" asp-action="Edit" asp-route-id="@meal.Id" class="btn btn-primary mx-2">
+                                    <i class="bi bi-pencil-square"></i>&nbsp; Edit
+                                     </a>
+                                     
+                                     
+                                    <a asp-controller="Meal" asp-action="Details" asp-route-id="@meal.Id" class="btn btn-primary mx-2">
+                                    <i class="bi bi-info-circle-fill"></i> &nbsp; Details
+                                    </a>
+                                   
+
+                               
+                                
+                                <div class="w-75 btn-group" role="group">
+                                <a asp-controller="Meal" asp-action="Delete" asp-route-id="@meal.Id" class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash-fill"></i>&nbsp;<br>Delete
+                                    </a>
+                                    <div class="w-50 btn-group" role="group">
+                                <a asp-controller="Meal" asp-action="AddProducts" asp-route-id="@meal.Id" class="btn btn-success mx-2">
+                                    <i class="bi bi-plus-circle-fill"></i>&nbsp;<br> AddProduct
+                                    </a>
+                                
+                             </div>
+                             
+                             <td>
+                                <th>Kcal</th>
+                                <th>Protein</th>
+                                <th>Carbs</th>
+                                <th>Fat</th>
+            
+
+                        
+            </tr>
+            }
+        
+    </tbody>
+</table>
+
+</div>
+
+
+

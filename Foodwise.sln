@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodwise", "Foodwise\Foodwise.csproj", "{28DB4560-6737-4212-B494-E01D3026B096}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{28DB4560-6737-4212-B494-E01D3026B096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28DB4560-6737-4212-B494-E01D3026B096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28DB4560-6737-4212-B494-E01D3026B096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28DB4560-6737-4212-B494-E01D3026B096}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FAED525B-35AD-4110-8C9A-C723848E0B42}
+	EndGlobalSection
+EndGlobal

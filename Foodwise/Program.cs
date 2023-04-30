@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container. TEST
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CalorieTrackerDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("SqlDbtConnection")

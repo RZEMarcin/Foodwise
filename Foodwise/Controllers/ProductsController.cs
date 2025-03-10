@@ -54,6 +54,7 @@ namespace Foodwise.Controllers
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Product has been created successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
@@ -103,6 +104,7 @@ namespace Foodwise.Controllers
                         throw;
                     }
                 }
+                TempData["success"] = "Product has been updated successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View(product);
@@ -134,6 +136,7 @@ namespace Foodwise.Controllers
             var product = await _context.Products.FindAsync(id);
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
+            TempData["success"] = "Product has been deleted successfully";
             return RedirectToAction(nameof(Index));
         }
 

@@ -1,0 +1,80 @@
+﻿
+@model TodayMeals
+
+@{
+    ViewData["Title"] = "Today Meals";
+}
+<br>
+
+    <div class="row pt-4">
+        <div class="col-6">
+        <h1 class="text-primary">@ViewData["Title"]</h1>
+        </div>
+         <div class="col-6 text-end">
+              <h2 class="text-danger">Total Calories: @Model.TodayTotalCalories.ToString("0.00") Kcal</h2>
+              <h5 class="text-danger">
+                  Protein: @Model.TodayTotalProtein.ToString("0.00") g 
+                  Carbs: @Model.TodayTotalCarbohydrates.ToString("0.00") g 
+                  Fat: @Model.TodayTotalFat.ToString("0.00") g</h5>
+              <br><br/>
+            <br><br/>
+         </div>
+    </div>
+
+<div class="row">
+    <div class="col-md-16">
+        @if (Model.Meals.Any())
+        {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Meal Name</th>
+                        <th>Calories</th>
+                        <th>Protein</th>
+                        <th>Carbs</th>
+                        <th>Fat</th>
+                        <th>Date and time</th>
+                        <th></th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var meal in Model.Meals)
+                    {
+                        <tr>
+                            <td>@meal.Name</td>
+                            <td>@meal.TotalCalories.ToString("0.00") Kcal</td>
+                            <td>@meal.TotalProtein.ToString("0.00") g</td>
+                            <td>@meal.TotalCarbs.ToString("0.00") g</td>
+                            <td>@meal.TotalFat.ToString("0.00") g</td>
+                            <td>@meal.DateTime</td>
+                            
+
+                            <td class="w-75 btn-group" role="group">
+                               <a asp-controller="Meal" asp-action="Edit" asp-route-id="@meal.Id" class="btn btn-primary mx-2">
+                                    <i class="bi bi-pencil-fill"></i>&nbsp; Edit
+                                </a>
+                                <a asp-controller="Meal" asp-action="Details" asp-route-id="@meal.Id" class="btn btn-secondary mx-2">
+                                    <i class="bi bi-eye-fill"></i>&nbsp; Details
+                                </a>
+                                <a asp-controller="TodayMeals" asp-action="Delete" asp-route-id="@meal.Id" class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash-fill"></i>&nbsp; Delete
+                                </a>
+                               <a asp-controller="Meal" asp-action="AddProducts" asp-route-id="@meal.Id" class="btn btn-success mx-2">
+                                    <i class="bi bi-plus-circle-fill"></i>&nbsp;<br> AddProduct
+                                </a>    
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No meals found for today.</p>
+        }
+
+        <a asp-controller="Meal" asp-action="Create" class="btn btn-success">Create a New Meal</a>
+        <a asp-controller="Meal" asp-action="Index" class="btn btn-dark">View Meal History</a>
+    </div>
+</div>

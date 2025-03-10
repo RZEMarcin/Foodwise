@@ -21,10 +21,15 @@ namespace Foodwise.Controllers
         // GET: Meal
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Meals.Include(m => m.MealProducts).ToListAsync());
+            List<Meal> meals = await _context.Meals
+                .Include(m => m.MealProducts)
+                    .ThenInclude(mp => mp.Product)
+                .ToListAsync();
+
+            return View(meals);
         }
 
-        // GET: Meal/Details/5
+        // GET: Meal/Details
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,10 +42,13 @@ namespace Foodwise.Controllers
                 .ThenInclude(mp => mp.Product)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
+
+
             if (meal == null)
             {
                 return NotFound();
             }
+
 
             return View(meal);
         }
@@ -70,7 +78,8 @@ namespace Foodwise.Controllers
                 }
                 _context.Add(meal);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                TempData["success"] = "Meal has been created successfully";
+                return RedirectToAction("Index","TodayMeals");
             }
             ViewBag.Products = new SelectList(_context.Products);
             return View(meal);
@@ -148,8 +157,8 @@ namespace Foodwise.Controllers
                         throw;
                     }
                 }
-
-                return RedirectToAction(nameof(Index));
+                TempData["success"] = "Meal has been updated successfully";
+                return RedirectToAction("Index", "TodayMeals");
             }
 
             ViewBag.Products = new SelectList(_context.Products);
@@ -185,13 +194,15 @@ namespace Foodwise.Controllers
             var meal = await _context.Meals.FindAsync(id);
             _context.Meals.Remove(meal);
             await _context.SaveChangesAsync();
+            TempData["success"] = "Meal has been deleted successfully";
             return RedirectToAction(nameof(Index));
         }
 
         private bool MealExists(int id)
         {
             return _context.Meals.Any(e => e.Id == id);
-        }                                                                                                                                                                                                                                                                                                                                                                
+        }
+        // GET: Meal/AddProducts
         public IActionResult AddProducts(int id)
         {
             var meal = _context.Meals.Include(m => m.MealProducts).ThenInclude(mp => mp.Product).FirstOrDefault(m => m.Id == id);
@@ -205,7 +216,7 @@ namespace Foodwise.Controllers
 
             return View(model);
         }
-
+        // Post: Meal/AddProducts
         [HttpPost]
         public IActionResult AddProducts(MealProduct mealProduct)
         {
@@ -226,13 +237,54 @@ namespace Foodwise.Controllers
                     mealProduct.Fat = product.Fat * mealProduct.Weight * mealProduct.Quantity / 100;
                     _context.MealProducts.Add(mealProduct);
                     _context.SaveChanges();
-                    return RedirectToAction(nameof(Index));
+                    TempData["success"] = "Product has been added successfully";
+                    return RedirectToAction("Index","TodayMeals");
                 }
             }
 
             var productOptions = _context.Products.Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name }).ToList();
             var model = new AddProductsViewModel { MealId = mealProduct.MealId, ProductOptions = productOptions };
             return View(model);
+        }
+
+        // GET: Meal/RemoveProducts
+        [HttpGet]
+        public async Task<IActionResult> RemoveProducts(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var mealProduct = await _context.MealProducts
+                .Include(mp => mp.Meal)
+                .Include(mp => mp.Product)
+                .FirstOrDefaultAsync(mp => mp.Id == id);
+
+            if (mealProduct == null)
+            {
+                return NotFound();
+            }
+
+            return View(mealProduct);
+        }
+
+        // POST: Meal/RemoveProducts
+        [HttpPost, ActionName("RemoveProducts")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveProductsConfirmed(int id)
+        {
+            var mealProduct = await _context.MealProducts.FindAsync(id);
+
+            if (mealProduct == null)
+            {
+                return NotFound();
+            }
+
+            _context.MealProducts.Remove(mealProduct);
+            await _context.SaveChangesAsync();
+            TempData["success"] = "Product has been removed successfully";
+            return RedirectToAction(nameof(Index), new { id = mealProduct.MealId });
         }
 
 

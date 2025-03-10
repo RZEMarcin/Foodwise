@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Meal> 
+﻿
+@model List<Foodwise.Models.Meal>
  
 @{
     ViewData["Title"] = "Index";
@@ -21,10 +22,14 @@
 
     
 
-<table class="table">
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>Name</th>
+            <th>Calories</th>
+            <th>Protein</th>
+            <th>Carbohydrates</th>
+            <th>Fat</th>
             
             <th></th>
         </tr>
@@ -34,48 +39,33 @@
         {
             <tr>
                 <td>@meal.Name</td>
-               
-          
+                <td>@meal.TotalCalories.ToString("0.00") Kcal</td>
+                <td>@meal.TotalProtein.ToString("0.00") g</td>
+                <td>@meal.TotalCarbs.ToString("0.00") g</td>
+                <td>@meal.TotalFat.ToString("0.00") g</td>
 
+                
                 <td>
-
-                        <div class="w-75 btn-group" role="group">
-                                <a asp-controller="Meal" asp-action="Edit" asp-route-id="@meal.Id" class="btn btn-primary mx-2">
-                                    <i class="bi bi-pencil-square"></i>&nbsp; Edit
-                                     </a>
-                                     
-                                     
-                                    <a asp-controller="Meal" asp-action="Details" asp-route-id="@meal.Id" class="btn btn-primary mx-2">
-                                    <i class="bi bi-info-circle-fill"></i> &nbsp; Details
-                                    </a>
-                                   
-
-                               
-                                
-                                <div class="w-75 btn-group" role="group">
-                                <a asp-controller="Meal" asp-action="Delete" asp-route-id="@meal.Id" class="btn btn-danger mx-2">
-                                    <i class="bi bi-trash-fill"></i>&nbsp;<br>Delete
-                                    </a>
-                                    <div class="w-50 btn-group" role="group">
-                                <a asp-controller="Meal" asp-action="AddProducts" asp-route-id="@meal.Id" class="btn btn-success mx-2">
-                                    <i class="bi bi-plus-circle-fill"></i>&nbsp;<br> AddProduct
-                                    </a>
-                                
-                             </div>
-                             
-                             <td>
-                                <th>Kcal</th>
-                                <th>Protein</th>
-                                <th>Carbs</th>
-                                <th>Fat</th>
-            
-
-                        
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Meal" asp-action="Edit" asp-route-id="@meal.Id" class="btn btn-primary mx-2">
+                            <i class="bi bi-pencil-square"></i>&nbsp; Edit
+                        </a>
+                        <a asp-controller="Meal" asp-action="Details" asp-route-id="@meal.Id" class="btn btn-secondary mx-2">
+                            <i class="bi bi-eye-fill"></i> &nbsp; Details
+                        </a>
+                        <a asp-controller="Meal" asp-action="Delete" asp-route-id="@meal.Id" class="btn btn-danger mx-2">
+                            <i class="bi bi-trash-fill"></i>&nbsp;<br>Delete
+                        </a>
+                        <a asp-controller="Meal" asp-action="AddProducts" asp-route-id="@meal.Id" class="btn btn-success mx-2">
+                            <i class="bi bi-plus-circle-fill"></i>&nbsp;<br> AddProduct
+                        </a>                         
+                    </div>
+                </td>             
             </tr>
-            }
-        
+        }
     </tbody>
 </table>
+
 
 </div>
 
